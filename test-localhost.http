@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:8080
+
+# @name PostingReadings
+POST {{baseUrl}}/readings/store
+Content-Type: application/json
+
+{
+  "smartMeterId":"smart-meter-0",
+  "electricityReadings":[
+    { "time":1605081600, "reading":0.0503 },
+    { "time":1605168000, "reading":0.0213 }
+  ]
+}
+
+###
+
+# @name GetStoredReadings
+GET {{baseUrl}}/readings/read/smart-meter-0
+
+###
+
+# @name GetStoredReadingsUsingCbaseUrl
+curl "{{baseUrl}}/readings/read/smart-meter-0"
+
+###

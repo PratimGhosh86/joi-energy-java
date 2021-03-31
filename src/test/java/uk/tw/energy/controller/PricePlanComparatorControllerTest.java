@@ -38,7 +38,8 @@ public class PricePlanComparatorControllerTest {
         PricePlan pricePlan3 = new PricePlan(PRICE_PLAN_3_ID, null, BigDecimal.valueOf(2), null);
 
         List<PricePlan> pricePlans = Arrays.asList(pricePlan1, pricePlan2, pricePlan3);
-        PricePlanService tariffService = new PricePlanService(pricePlans, meterReadingService);
+        PricePlanService tariffService = new PricePlanService(pricePlans, meterReadingService,
+            new AccountService(new HashMap<>()));
 
         Map<String, String> meterToTariffs = new HashMap<>();
         meterToTariffs.put(SMART_METER_ID, PRICE_PLAN_1_ID);
