@@ -82,12 +82,13 @@ public class PricePlanService {
       final Optional<PricePlan> pricePlan = this.getPricePlanFromId(pricePlanId);
       if (!pricePlan.isPresent())
         return Optional.empty(); // PricePlanNotConfiguredException
-      final List<ElectricityReading> meterReadings = this.filterMeterReadingsForMeterByDuration(
-          smartMeterId, reading -> reading.getTime().isAfter(this.getTimestampForLastWeek()));
+      final List<ElectricityReading> meterReadings =
+          this.filterMeterReadingsForMeterByReadingCriteria(smartMeterId,
+              reading -> reading.getTime().isAfter(this.getTimestampForLastWeek()));
       return Optional.of(this.calculateCost(meterReadings, pricePlan.get()));
     }
 
-    private List<ElectricityReading> filterMeterReadingsForMeterByDuration(
+    private List<ElectricityReading> filterMeterReadingsForMeterByReadingCriteria(
         final String smartMeterId, final Predicate<ElectricityReading> criteria) {
       return meterReadingService.getReadings(smartMeterId).orElse(Collections.emptyList()).stream()
           .filter(criteria).collect(Collectors.toList());
